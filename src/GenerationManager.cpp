@@ -18,7 +18,7 @@ void GenerationManager::start()
         _generators.emplace_back(subdomain, _domain, _rule, _itrLimit);
     }
 
-    #pragma omp parallel num_threads(_threadsNumber)
+   #pragma omp parallel num_threads(_threadsNumber)
     {
         m_int idx = omp_get_thread_num();
         while(_generators[idx].finish())
@@ -29,4 +29,19 @@ void GenerationManager::start()
             #pragma omp barrier
         }
     }
+}
+
+void GenerationManager::setNeighbouthood(Neighbourhood& n)
+{
+    _domain.setNeighbourhood(n);
+}
+
+void GenerationManager::setBC(std::shared_ptr<BC> bc)
+{
+    _domain.setBC(bc);
+}
+
+void GenerationManager::setRule(std::shared_ptr<Rule> rule)
+{
+    _rule = duplicate(rule);
 }

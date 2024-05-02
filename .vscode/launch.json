@@ -5,11 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-        "name": "Debugging",
+        "name": "Debugging 2D",
         "type": "cppdbg",
         "request": "launch",
         "program": "${workspaceFolder}/bin/mwca",
-        "args": ["128", "128", "128", "10", "100"],
+        "args": ["128", "128", "1", "10", "100"],
         "stopAtEntry": true,
         "cwd": "${workspaceFolder}/src",
         "externalConsole": false,

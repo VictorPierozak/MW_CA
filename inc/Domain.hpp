@@ -7,6 +7,7 @@
 
 struct Neighbourhood
 {
+    Neighbourhood(): pos(nullptr), size(0) {}
     Neighbourhood& operator=(const Neighbourhood& src);
     coor* pos;
     m_int size;
@@ -34,7 +35,7 @@ class Domain
     m_int  operator()(m_int, m_int, m_int) const;
     m_int& operator[](m_int);
 
-    //const m_int& operator()(m_int, m_int, m_int) const;
+    m_int& operator()(m_int, m_int, m_int);
     const m_int& operator[](m_int) const;
 
     bool allocated() const {return _buffer != nullptr; }

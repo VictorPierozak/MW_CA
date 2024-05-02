@@ -32,7 +32,7 @@ void Generator::iteration()
     for(m_int x = _subdomain.x0; x < _subdomain.x1; x++)
     {
         std::vector nstates = _input->around(x,y,z);
-        (*_output)[y * _output->dimX()*_output->dimZ() + z *_output->dimX() + x] = _rule->state(nstates);
+        (*_output)(x,y,z) = _rule->state(nstates);
     }
     _itrCounter++;
 }

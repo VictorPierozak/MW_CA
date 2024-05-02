@@ -3,7 +3,9 @@
 
 Neighbourhood& Neighbourhood::operator=(const Neighbourhood& src)
 {
-    copy(pos, src.pos, size);
+    if(pos != nullptr) delete[] pos;
+    pos = new coor[src.size];
+    copy(pos, src.pos, src.size);
     size = src.size;
     return *this;
 }
@@ -30,7 +32,7 @@ Domain::Domain(m_int dimX, m_int dimY, m_int dimZ):
 
 m_int Domain::operator()(m_int x, m_int y, m_int z) const
 {
-    return (*_bc)(x,y,z, *this);
+    return _buffer[y*_dimX*_dimZ + z*_dimX + x];
 }
     
 m_int& Domain::operator[](m_int pos)
@@ -39,12 +41,12 @@ m_int& Domain::operator[](m_int pos)
     else throw std::runtime_error("Invalid index - " + std::to_string(pos));
 }
 
-/*
-const m_int& Domain::operator()(m_int x, m_int y, m_int z) const
+
+m_int& Domain::operator()(m_int x, m_int y, m_int z)
 {
-    return (*_bc)(x,y,z, *this);
+    return _buffer[y*_dimX*_dimZ + z*_dimX + x];
 }
-*/
+
 
 const m_int& Domain::operator[](m_int pos) const
 {
@@ -74,10 +76,11 @@ std::vector<m_int> Domain::around(m_int x, m_int y, m_int z)
 {
     coor pos = {x,y,z};
     std::vector<m_int> values;
+    values.reserve(_neighbours.size);
     for(m_int n = 0; n < _neighbours.size; n++)
     {
         coor moved = pos + _neighbours.pos[n];
-        values.push_back((*_bc)(moved.x, moved.y, moved.z, *this));
+        values.push_back(_bc->operator()(moved.x, moved.y, moved.z, *this));
     }
     return values;
 }

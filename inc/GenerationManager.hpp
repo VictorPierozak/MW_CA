@@ -9,6 +9,10 @@ class GenerationManager
     GenerationManager(m_int dimX, m_int dimY, m_int dimZ, m_int itrLimit);
 
     void setRandomUniformNucleator(m_int statesNumber) { _nucleator = std::make_shared<RandomUniformNucleator>(statesNumber); }
+    void setNeighbouthood(Neighbourhood& n);
+    void setBC(std::shared_ptr<BC> bc);
+    void setRule(std::shared_ptr<Rule> rule);
+    void setThreadsNumber(m_int n) {_threadsNumber = n;}
 
     void start();
 
@@ -24,5 +28,5 @@ class GenerationManager
 
     m_int _statesNumber;
     m_int _itrLimit;
-    m_int _threadsNumber{12};
+    m_int _threadsNumber{1};
 };
