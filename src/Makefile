@@ -35,6 +35,14 @@ $(OBJ_DIR)Rules.o: $(SRC_DIR)Rules.cpp
 	$(CXX) $(CXX_FLAGS) $(SRC_DIR)Rules.cpp -o ../obj/Rules.o
 DEPENDENCIES += $(OBJ_DIR)Rules.o 
 
+$(OBJ_DIR)postproc.o: $(SRC_DIR)postproc.cpp $(SRC_DIR)BMP/EasyBMP.cpp $(SRC_DIR)BMP/libbmp.cpp
+	$(CXX) $(CXX_FLAGS) $(SRC_DIR)postproc.cpp -o ../obj/postproc.o
+DEPENDENCIES += $(OBJ_DIR)postproc.o
+
+$(OBJ_DIR)bmp.o: $(SRC_DIR)BMP/EasyBMP.cpp
+	$(CXX) $(CXX_FLAGS) -I../inc/BMP $(SRC_DIR)BMP/EasyBMP.cpp -o ../obj/bmp.o
+DEPENDENCIES += $(OBJ_DIR)bmp.o
+
 $(OBJ_DIR)main.o: $(SRC_DIR)main.cpp
 	$(CXX) $(CXX_FLAGS) $(SRC_DIR)main.cpp -o ../obj/main.o
 DEPENDENCIES += $(OBJ_DIR)main.o 

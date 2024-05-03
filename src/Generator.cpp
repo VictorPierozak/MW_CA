@@ -1,10 +1,10 @@
 #include"Generator.hpp"
 
-Generator::Generator(const Subdomain& subdomain, const Domain& domain, const std::shared_ptr<Rule> rule, m_int itrLimit)
+Generator::Generator(const Subdomain& subdomain, const Domain& domain, const Domain& tmpdomain, const std::shared_ptr<Rule> rule, m_int itrLimit)
 {
     _subdomain = subdomain;
     domain.clone(_domain);
-    domain.clone(_tmpDomain);
+    tmpdomain.clone(_tmpDomain);
     _rule = duplicate(rule);
     _itrLimit = itrLimit;
     _itrCounter = 0;

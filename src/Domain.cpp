@@ -5,7 +5,7 @@ Neighbourhood& Neighbourhood::operator=(const Neighbourhood& src)
 {
     if(pos != nullptr) delete[] pos;
     pos = new coor[src.size];
-    copy(pos, src.pos, src.size);
+    m_copy(pos, src.pos, src.size);
     size = src.size;
     return *this;
 }
@@ -20,7 +20,7 @@ Domain::~Domain()
    
 }
 
-const m_int Domain::Void = 0;
+const m_int Domain::Void = __INT64_MAX__;
 
 Domain::Domain(m_int dimX, m_int dimY, m_int dimZ):
     _dimX(dimX), _dimY(dimY), _dimZ(dimZ), _bc(nullptr)
@@ -58,7 +58,7 @@ const m_int& Domain::operator[](m_int pos) const
 void Domain::resetBuffer()
 {
     for(size_t i = 0; i < _size; i++)
-    _buffer[i] = 0;
+    _buffer[i] = Domain::Void;
 }
 
 void Domain::clone(Domain& dest) const
@@ -68,6 +68,23 @@ void Domain::clone(Domain& dest) const
     dest._dimZ = _dimZ;
     dest._size = _size;
     dest._buffer = _buffer;
+    dest._neighbours = _neighbours;
+    dest._bc = duplicate(_bc);
+}
+
+void Domain::copyBuffer(Domain& dest) const
+{
+    if(_size != dest._size) throw std::runtime_error("Buffers are not equal in size!");
+    m_copy(dest._buffer.get(), _buffer.get(), _size);
+}
+
+void Domain::copy(Domain& dest) const
+{
+    dest._dimX = _dimX;
+    dest._dimY = _dimY;
+    dest._dimZ = _dimZ;
+    dest._size = _size;
+    copyBuffer(dest);
     dest._neighbours = _neighbours;
     dest._bc = duplicate(_bc);
 }

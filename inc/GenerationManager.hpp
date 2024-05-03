@@ -8,7 +8,7 @@ class GenerationManager
     GenerationManager() = delete;
     GenerationManager(m_int dimX, m_int dimY, m_int dimZ, m_int itrLimit);
 
-    void setRandomUniformNucleator(m_int statesNumber) { _nucleator = std::make_shared<RandomUniformNucleator>(statesNumber); }
+    void setRandomUniformNucleator(m_int statesNumber) { _nucleator = std::make_shared<RandomUniformNucleator>(statesNumber); _statesNumber=statesNumber; }
     void setNeighbouthood(Neighbourhood& n);
     void setBC(std::shared_ptr<BC> bc);
     void setRule(std::shared_ptr<Rule> rule);
@@ -18,9 +18,13 @@ class GenerationManager
 
     std::shared_ptr<m_int[]> get() {return (std::shared_ptr<m_int[]>) _domain;}
 
+    Domain& domain() { return _domain; }
+    m_int stateNumber() const { return _statesNumber; }
+
     private:
 
     Domain _domain;
+    Domain _tmpdomain;
 
     std::vector<Generator> _generators;
     std::shared_ptr<Nucleator> _nucleator;

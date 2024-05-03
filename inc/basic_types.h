@@ -47,7 +47,7 @@ struct coor
 };
 
 template<typename T>
-void copy(T* dest, const T* src, size_t size)
+void m_copy(T* dest, const T* src, size_t size)
 {
     for(m_int i = 0; i < size; i++) dest[i] = src[i];
 }

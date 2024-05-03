@@ -1,5 +1,5 @@
 #include<algorithm>
-
+#include"Domain.hpp"
 #include"Rules.hpp"
 
 m_int MostNumerous::state(const std::vector<m_int>& neighbours) const
@@ -12,10 +12,11 @@ m_int MostNumerous::state(const std::vector<m_int>& neighbours) const
         ssx = ss;
         auto vptr = std::find_if(unique_states.begin(), unique_states.end(), identity);
         if(vptr != unique_states.end()) { vptr->second++;}
-        else unique_states.push_back({ss, 1});
+        else if(ss != Domain::Void) unique_states.push_back({ss, 1});
     }
     auto compare = [](const std::pair<m_int, m_int>& a, const std::pair<m_int, m_int>& b) { return a.second < b.second; };
     auto max = std::max_element(unique_states.begin(), unique_states.end(), compare);
+    if(max == unique_states.end()) return Domain::Void;
     return max->first;
 }
 

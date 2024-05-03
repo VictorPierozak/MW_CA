@@ -65,6 +65,8 @@
         "__functional_03": "cpp",
         "__functional_base": "cpp",
         "__split_buffer": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "codecvt": "cpp",
+        "fstream": "cpp"
     }
 }

@@ -15,12 +15,13 @@ class Generator
 
     Generator() = delete;
     Generator(Generator&&);
-    Generator(const Subdomain& subdomain, const Domain& domain, const std::shared_ptr<Rule> rule, m_int itrLimit);
+    Generator(const Subdomain& subdomain, const Domain& domain, const Domain& tmpdomain, const std::shared_ptr<Rule> rule, m_int itrLimit);
 
     void iteration();
     void swapBuffers() { std::swap(_input, _output); }
+    void reset() { _itrCounter = 0;}
 
-    bool finish() const { return _itrCounter == _itrLimit; }
+    bool finish() const { return _itrCounter != _itrLimit; }
     private:
 
     Domain _domain;

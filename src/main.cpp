@@ -1,5 +1,6 @@
 #include<iostream>
 #include"GenerationManager.hpp"
+#include"postproc.hpp"
 
 void Moore2D(Neighbourhood& n);
 
@@ -45,12 +46,16 @@ int main(int argc, const char** argv)
     try
     {
         gen.start();
+        Domain& d = gen.domain();
+        toBmp(d, gen.stateNumber(), "/home/wiktor/Desktop/MW/MW_CA/res");
     }
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
     }
     
+
+
     std::cout<< "Finish\n";
     return 0;
 }

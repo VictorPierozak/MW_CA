@@ -30,6 +30,8 @@ class Domain
     static const m_int Void;
 
     void clone(Domain& dest) const;
+    void copy(Domain& dest) const;
+    void copyBuffer(Domain& dest) const;
     void resetBuffer();
 
     m_int  operator()(m_int, m_int, m_int) const;
