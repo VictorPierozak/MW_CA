@@ -1,15 +1,6 @@
 #include<stdexcept>
 #include"Domain.hpp"
 
-Neighbourhood& Neighbourhood::operator=(const Neighbourhood& src)
-{
-    if(pos != nullptr) delete[] pos;
-    pos = new coor[src.size];
-    m_copy(pos, src.pos, src.size);
-    size = src.size;
-    return *this;
-}
-
 Domain::Domain(): _dimX(0), _dimY(0), _dimZ(0), _size(0), _buffer(nullptr), _bc(nullptr)
 {
 }
@@ -20,7 +11,13 @@ Domain::~Domain()
    
 }
 
+#ifdef INT_64
 const m_int Domain::Void = __INT64_MAX__;
+#endif
+
+#ifdef INT_32
+const m_int Domain::Void = __INT32_MAX__;
+#endif
 
 Domain::Domain(m_int dimX, m_int dimY, m_int dimZ):
     _dimX(dimX), _dimY(dimY), _dimZ(dimZ), _bc(nullptr)
@@ -68,7 +65,7 @@ void Domain::clone(Domain& dest) const
     dest._dimZ = _dimZ;
     dest._size = _size;
     dest._buffer = _buffer;
-    dest._neighbours = _neighbours;
+    dest._neighbours = _neighbours->duplicate();
     dest._bc = duplicate(_bc);
 }
 
@@ -85,19 +82,94 @@ void Domain::copy(Domain& dest) const
     dest._dimZ = _dimZ;
     dest._size = _size;
     copyBuffer(dest);
-    dest._neighbours = _neighbours;
+    dest._neighbours = _neighbours->duplicate();
     dest._bc = duplicate(_bc);
 }
 
 std::vector<m_int> Domain::around(m_int x, m_int y, m_int z)
 {
-    coor pos = {x,y,z};
+    return _neighbours->around(x,y,z, *this);
+}
+
+std::vector<m_int> Moore::around(m_int x, m_int y, m_int z, Domain& domain) 
+{
+    coor cc = {x,y,z};
     std::vector<m_int> values;
-    values.reserve(_neighbours.size);
-    for(m_int n = 0; n < _neighbours.size; n++)
+    values.reserve(8);
+    coor mov = {0,0,0};
+
+    for(m_int y = -1; y <= 1; y++)
+    for(m_int x = -1; x <= 1; x++)
     {
-        coor moved = pos + _neighbours.pos[n];
-        values.push_back(_bc->operator()(moved.x, moved.y, moved.z, *this));
+        if(x == 0 && y == 0) continue;
+        mov = {x,y,0};
+        coor moved = cc + mov;
+        values.push_back(domain.bc()->operator()(moved.x, moved.y, moved.z, domain));
     }
     return values;
+}
+
+std::shared_ptr<Neighbourhood> Moore::duplicate() const
+{
+    return std::shared_ptr<Neighbourhood>(new Moore);
+}
+
+Random::Random(const vecrand_n& ns)
+{
+    neighbourhoods.resize(ns.size());
+    std::vector<std::pair<m_int, m_float>> rnds;
+    for(m_int i = 0; i < ns.size(); i++)
+    {
+        neighbourhoods[i].first = ns[i].first->duplicate();
+        neighbourhoods[i].second = ns[i].second;
+        rnds.emplace_back(i, neighbourhoods[i].second);
+    }
+    wheel.set(rnds);
+}
+
+Random::Random(const Random& obj)
+{
+    neighbourhoods.resize(obj.neighbourhoods.size());
+    std::vector<std::pair<m_int, m_float>> rnds;
+    for(m_int i = 0; i < neighbourhoods.size(); i++)
+    {
+        neighbourhoods[i].first = obj.neighbourhoods[i].first->duplicate();
+        neighbourhoods[i].second = obj.neighbourhoods[i].second;
+        rnds.emplace_back(i, neighbourhoods[i].second);
+    }
+    wheel.set(rnds);
+}
+
+std::vector<m_int> Random::around(m_int x, m_int y, m_int z, Domain& domain)
+{
+    return neighbourhoods[wheel.get()].first->around(x,y,z, domain);
+}
+
+std::shared_ptr<Neighbourhood> Random::duplicate() const
+{
+    return std::shared_ptr<Neighbourhood>(new Random(*this));
+}
+
+std::vector<m_int> Neumann::around(m_int x, m_int y, m_int z, Domain& domain) 
+{
+    coor cc = {x,y,z};
+    std::vector<m_int> values;
+    values.reserve(8);
+    coor mov = {0,0,0};
+
+    for(m_int y = -1; y <= 1; y++)
+    for(m_int x = -1; x <= 1; x++)
+    {
+        if(x != 0 && y != 0) continue;
+        if(x == 0 && y == 0) continue;
+        mov = {x,y,0};
+        coor moved = cc + mov;
+        values.push_back(domain.bc()->operator()(moved.x, moved.y, moved.z, domain));
+    }
+    return values;
+}
+
+std::shared_ptr<Neighbourhood> Neumann::duplicate() const
+{
+    return std::shared_ptr<Neighbourhood>(new Neumann);
 }

@@ -35,7 +35,7 @@ void GenerationManager::start()
     }
 }
 
-void GenerationManager::setNeighbouthood(Neighbourhood& n)
+void GenerationManager::setNeighbourhood(std::shared_ptr<Neighbourhood> n)
 {
     _domain.setNeighbourhood(n);
 }

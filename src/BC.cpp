@@ -10,7 +10,7 @@ m_int Periodic::operator()(m_int x, m_int y, m_int z, const Domain& domain)
 m_int Absorption::operator()(m_int x, m_int y, m_int z, const Domain& domain)
 {
     if(inside(x,y,z)) return domain(x,y,z);
-    else return VOID;
+    else return Domain::Void;
 }
 
 std::shared_ptr<BC> duplicate(std::shared_ptr<BC> bc)

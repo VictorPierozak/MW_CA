@@ -43,6 +43,10 @@ $(OBJ_DIR)bmp.o: $(SRC_DIR)BMP/EasyBMP.cpp
 	$(CXX) $(CXX_FLAGS) -I../inc/BMP $(SRC_DIR)BMP/EasyBMP.cpp -o ../obj/bmp.o
 DEPENDENCIES += $(OBJ_DIR)bmp.o
 
+$(OBJ_DIR)random.o: $(SRC_DIR)Random.cpp
+	$(CXX) $(CXX_FLAGS) $(SRC_DIR)Random.cpp -o ../obj/random.o
+DEPENDENCIES += $(OBJ_DIR)random.o
+
 $(OBJ_DIR)main.o: $(SRC_DIR)main.cpp
 	$(CXX) $(CXX_FLAGS) $(SRC_DIR)main.cpp -o ../obj/main.o
 DEPENDENCIES += $(OBJ_DIR)main.o 
