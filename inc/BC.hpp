@@ -4,11 +4,12 @@
 
 class Domain;
 
-class BC
+class BC: public virtual Clonable<BC>
 {
     public:
 
     BC() = delete;
+    BC(const BC& bc) = default;
     BC(m_int dimX, m_int dimY, m_int dimZ): _dimX(dimX), _dimY(dimY), _dimZ(dimZ) 
     {}
     virtual ~BC() = default;
@@ -16,7 +17,6 @@ class BC
     enum class BCType{Absorption, Periodic};
 
     virtual m_int operator()(m_int x, m_int y, m_int z, const Domain&) = 0;
-    virtual BCType type() const = 0;
 
     protected:
 
@@ -32,17 +32,17 @@ class Periodic: public BC
 {
     public:
     Periodic() = delete;
+    Periodic(const Periodic&) = default;
     Periodic(m_int dimX, m_int dimY, m_int dimZ): BC(dimX, dimY, dimZ){}
-    virtual m_int operator()(m_int x, m_int y, m_int z, const Domain&) override;
-    virtual BCType type() const override { return BC::BCType::Periodic; }
+    m_int operator()(m_int x, m_int y, m_int z, const Domain&) override;
+    std::shared_ptr<BC> clone() const override { return std::shared_ptr<BC>(new Periodic(_dimX, _dimY, _dimZ)); }
 };
 
 class Absorption: public BC
 {
     public:
+    Absorption(const Absorption&) = default;
     Absorption(m_int dimX, m_int dimY, m_int dimZ): BC(dimX, dimY, dimZ){}
-    virtual m_int operator()(m_int x, m_int y, m_int z, const Domain&) override;
-    virtual BCType type() const override { return BC::BCType::Absorption; }
+    m_int operator()(m_int x, m_int y, m_int z, const Domain&) override;
+    std::shared_ptr<BC> clone() const override { return std::shared_ptr<BC>(new Absorption(_dimX, _dimY, _dimZ)); }
 };
-
-std::shared_ptr<BC> duplicate(std::shared_ptr<BC> bc);

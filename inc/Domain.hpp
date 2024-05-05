@@ -2,17 +2,17 @@
 #include<vector>
 #include<memory>
 #include<array>
+#include<functional>
 #include"basic_types.h"
 #include"BC.hpp"
 #include"Random.hpp"
 
-class Neighbourhood
+class Neighbourhood: public Clonable<Neighbourhood>
 {
     public:
     Neighbourhood() = default;
     virtual ~Neighbourhood() = default;
     virtual std::vector<m_int> around(m_int x, m_int y, m_int z, Domain& domain) = 0;
-    virtual std::shared_ptr<Neighbourhood> duplicate() const = 0;
 };
 
 
@@ -23,7 +23,7 @@ class Moore: public Neighbourhood
     Moore() = default;
     ~Moore() = default;
     std::vector<m_int> around(m_int x, m_int y, m_int z, Domain& domain) override;
-    std::shared_ptr<Neighbourhood> duplicate() const override;
+    std::shared_ptr<Neighbourhood> clone() const override;
 };
 
 class Neumann: public Neighbourhood
@@ -32,7 +32,7 @@ class Neumann: public Neighbourhood
     Neumann() = default;
     ~Neumann() = default;
     std::vector<m_int> around(m_int x, m_int y, m_int z, Domain& domain) override;
-    std::shared_ptr<Neighbourhood> duplicate() const override;
+    std::shared_ptr<Neighbourhood> clone() const override;
 };
 
 class Random: public Neighbourhood
@@ -47,14 +47,12 @@ class Random: public Neighbourhood
     Random() = delete;
     ~Random() = default;
     std::vector<m_int> around(m_int x, m_int y, m_int z, Domain& domain) override;
-    std::shared_ptr<Neighbourhood> duplicate() const override;
+    std::shared_ptr<Neighbourhood> clone() const override;
 
     private:
     vecrand_n neighbourhoods;
     FortuneWheel wheel;
 };
-
-#define IDX(x,y,z) y*domain.dimX()*domain.dimZ() + z*domain.dimX() + x
 
 class Domain
 {
@@ -75,6 +73,9 @@ class Domain
     void copyBuffer(Domain& dest) const;
     void resetBuffer();
 
+    void for_each(std::function<void(m_int&)> op);
+    void for_each(std::function<void(const m_int&)> op) const;
+
     m_int  operator()(m_int, m_int, m_int) const;
     m_int& operator[](m_int);
 
@@ -88,13 +89,13 @@ class Domain
 
     std::vector<m_int> around(m_int x, m_int y, m_int z);
 
-    void setNeighbourhood(std::shared_ptr<Neighbourhood> org) { _neighbours = org->duplicate(); }
-    void setBC(std::shared_ptr<BC> bc) { _bc = duplicate(bc); }
+    void setNeighbourhood(std::shared_ptr<Neighbourhood> org) { _neighbours = org->clone(); }
+    void setBC(std::shared_ptr<BC> bc) { _bc = bc->clone(); }
 
     m_int dimX() const { return _dimX; }
     m_int dimY() const { return _dimY; }
     m_int dimZ() const { return _dimZ; }
-
+    m_int size() const { return _size; }
     std::shared_ptr<BC>& bc() {return _bc;}
 
     private:

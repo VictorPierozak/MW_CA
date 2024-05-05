@@ -51,7 +51,6 @@ const m_int& Domain::operator[](m_int pos) const
     else throw std::runtime_error("Invalid index - " + std::to_string(pos));
 }
 
-
 void Domain::resetBuffer()
 {
     for(size_t i = 0; i < _size; i++)
@@ -65,8 +64,8 @@ void Domain::clone(Domain& dest) const
     dest._dimZ = _dimZ;
     dest._size = _size;
     dest._buffer = _buffer;
-    dest._neighbours = _neighbours->duplicate();
-    dest._bc = duplicate(_bc);
+    dest._neighbours = _neighbours->clone();
+    dest._bc = _bc->clone();
 }
 
 void Domain::copyBuffer(Domain& dest) const
@@ -82,13 +81,29 @@ void Domain::copy(Domain& dest) const
     dest._dimZ = _dimZ;
     dest._size = _size;
     copyBuffer(dest);
-    dest._neighbours = _neighbours->duplicate();
-    dest._bc = duplicate(_bc);
+    dest._neighbours = _neighbours->clone();
+    dest._bc = _bc->clone();
 }
 
 std::vector<m_int> Domain::around(m_int x, m_int y, m_int z)
 {
     return _neighbours->around(x,y,z, *this);
+}
+
+void Domain::for_each(std::function<void(m_int&)> op)
+{
+    for(m_int idx = 0; idx < _size; idx++)
+    {
+        op(_buffer[idx]);
+    }
+}
+
+void Domain::for_each(std::function<void(const m_int&)> op) const
+{
+     for(m_int idx = 0; idx < _size; idx++)
+    {
+        op(_buffer[idx]);
+    }
 }
 
 std::vector<m_int> Moore::around(m_int x, m_int y, m_int z, Domain& domain) 
@@ -104,12 +119,13 @@ std::vector<m_int> Moore::around(m_int x, m_int y, m_int z, Domain& domain)
         if(x == 0 && y == 0) continue;
         mov = {x,y,0};
         coor moved = cc + mov;
+        if(domain.bc()->operator()(moved.x, moved.y, moved.z, domain) != Domain::Void)
         values.push_back(domain.bc()->operator()(moved.x, moved.y, moved.z, domain));
     }
     return values;
 }
 
-std::shared_ptr<Neighbourhood> Moore::duplicate() const
+std::shared_ptr<Neighbourhood> Moore::clone() const
 {
     return std::shared_ptr<Neighbourhood>(new Moore);
 }
@@ -120,7 +136,7 @@ Random::Random(const vecrand_n& ns)
     std::vector<std::pair<m_int, m_float>> rnds;
     for(m_int i = 0; i < ns.size(); i++)
     {
-        neighbourhoods[i].first = ns[i].first->duplicate();
+        neighbourhoods[i].first = ns[i].first->clone();
         neighbourhoods[i].second = ns[i].second;
         rnds.emplace_back(i, neighbourhoods[i].second);
     }
@@ -133,7 +149,7 @@ Random::Random(const Random& obj)
     std::vector<std::pair<m_int, m_float>> rnds;
     for(m_int i = 0; i < neighbourhoods.size(); i++)
     {
-        neighbourhoods[i].first = obj.neighbourhoods[i].first->duplicate();
+        neighbourhoods[i].first = obj.neighbourhoods[i].first->clone();
         neighbourhoods[i].second = obj.neighbourhoods[i].second;
         rnds.emplace_back(i, neighbourhoods[i].second);
     }
@@ -145,7 +161,7 @@ std::vector<m_int> Random::around(m_int x, m_int y, m_int z, Domain& domain)
     return neighbourhoods[wheel.get()].first->around(x,y,z, domain);
 }
 
-std::shared_ptr<Neighbourhood> Random::duplicate() const
+std::shared_ptr<Neighbourhood> Random::clone() const
 {
     return std::shared_ptr<Neighbourhood>(new Random(*this));
 }
@@ -164,12 +180,13 @@ std::vector<m_int> Neumann::around(m_int x, m_int y, m_int z, Domain& domain)
         if(x == 0 && y == 0) continue;
         mov = {x,y,0};
         coor moved = cc + mov;
+        if(domain.bc()->operator()(moved.x, moved.y, moved.z, domain) != Domain::Void)
         values.push_back(domain.bc()->operator()(moved.x, moved.y, moved.z, domain));
     }
     return values;
 }
 
-std::shared_ptr<Neighbourhood> Neumann::duplicate() const
+std::shared_ptr<Neighbourhood> Neumann::clone() const
 {
     return std::shared_ptr<Neighbourhood>(new Neumann);
 }

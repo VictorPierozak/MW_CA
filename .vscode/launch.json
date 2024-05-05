@@ -23,5 +23,25 @@
                 "trace": true
             }
         ]
-    }]
+    },
+    {
+        "name": "GUI TEST",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "/home/wiktor/Desktop/MW/MW_CA/test/gui/GenerartorApplication",
+        "stopAtEntry": true,
+        "cwd": "${workspaceFolder}/test/gui",
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "setupCommands": [
+            {
+                "description": "Enable pretty-printing for gdb",
+                "text": "-enable-pretty-printing",
+                "ignoreFailures": true,
+                "justMyCode": false,
+                "trace": true
+            }
+        ]
+    }
+]
 }

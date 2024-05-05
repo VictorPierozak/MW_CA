@@ -21,8 +21,8 @@ int main(int argc, const char** argv)
 
     {
         Random::vecrand_n rands;
-        rands.push_back({std::shared_ptr<Neighbourhood>(new Moore), 0.6});
-        rands.push_back({std::shared_ptr<Neighbourhood>(new Neumann), 0.4});
+        rands.push_back({std::shared_ptr<Neighbourhood>(new Moore), 0.2});
+        rands.push_back({std::shared_ptr<Neighbourhood>(new Neumann), 0.8});
         gen.setNeighbourhood(std::shared_ptr<Neighbourhood>(new Random(rands)));
     }
 

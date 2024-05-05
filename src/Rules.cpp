@@ -20,6 +20,11 @@ m_int MostNumerous::state(const std::vector<m_int>& neighbours) const
     return max->first;
 }
 
+std::shared_ptr<Rule> MostNumerous::clone() const
+{
+    return std::shared_ptr<Rule>(new MostNumerous(*this));
+}
+
 m_int LeastNumerous::state(const std::vector<m_int>& neighbours) const
 {
     m_int ssx;
@@ -38,17 +43,7 @@ m_int LeastNumerous::state(const std::vector<m_int>& neighbours) const
     return min->first;
 }
 
-std::shared_ptr<Rule> duplicate(const std::shared_ptr<Rule> &rule)
+std::shared_ptr<Rule> LeastNumerous::clone() const
 {
-    std::shared_ptr<Rule> result;
-    switch(rule->type())
-    {
-        case Rule::Type::MostNumerous:
-            result.reset(new MostNumerous(*((MostNumerous*) rule.get())));
-            break;
-        case Rule::Type::LeastNumerous:
-            result.reset(new LeastNumerous(*(LeastNumerous*) rule.get()));
-            break;
-    }
-    return result;
+    return std::shared_ptr<Rule>(new LeastNumerous(*this));
 }

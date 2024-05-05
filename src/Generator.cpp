@@ -5,7 +5,7 @@ Generator::Generator(const Subdomain& subdomain, const Domain& domain, const Dom
     _subdomain = subdomain;
     domain.clone(_domain);
     tmpdomain.clone(_tmpDomain);
-    _rule = duplicate(rule);
+    _rule = rule->clone();
     _itrLimit = itrLimit;
     _itrCounter = 0;
 
@@ -31,6 +31,11 @@ void Generator::iteration()
     for(m_int z = _subdomain.z0; z < _subdomain.z1; z++)
     for(m_int x = _subdomain.x0; x < _subdomain.x1; x++)
     {
+        if((*_input)(x,y,z) != Domain::Void)
+        {
+            (*_output)(x,y,z) = (*_input)(x,y,z);
+            continue;
+        }
         std::vector nstates = _input->around(x,y,z);
         (*_output)(x,y,z) = _rule->state(nstates);
     }

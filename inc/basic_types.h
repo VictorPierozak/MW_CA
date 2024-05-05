@@ -1,5 +1,6 @@
 #pragma once
 #include<cstdint>
+#include<memory>
 
 #ifndef NOT_DEFAULT
 #define INT_64
@@ -30,8 +31,6 @@ typedef uint16_t m_uint;
 #define M_UINT_MAX __UINT16_MAX__
 #endif
 
-#define VOID 0
-
 struct coor
 {
     coor& operator=(const coor& src)
@@ -58,3 +57,11 @@ void reset(T* array, size_t size, T value)
     for(m_int i = 0; i < size; i++) array[i] = value;
 }
 
+template<typename T> 
+class Clonable
+{
+    public:
+    Clonable() = default;
+    virtual ~Clonable() = default;
+    virtual std::shared_ptr<T> clone() const = 0;
+};

@@ -47,5 +47,5 @@ void GenerationManager::setBC(std::shared_ptr<BC> bc)
 
 void GenerationManager::setRule(std::shared_ptr<Rule> rule)
 {
-    _rule = duplicate(rule);
+    _rule = rule->clone();
 }

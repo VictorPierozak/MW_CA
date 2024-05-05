@@ -10,6 +10,6 @@ void RandomUniformNucleator::nucleation(Domain& domain)
         m_int x = xdist(_rand);
         m_int y = ydist(_rand);
         m_int z = zdist(_rand);
-        domain[IDX(x,y,z)] = s;
+        domain(x,y,z) = s;
     }
 }

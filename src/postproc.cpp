@@ -46,3 +46,26 @@ void toBmp(const Domain& domain, m_int stateNumber, std::string dir)
         img.WriteToFile(file.c_str());
     }
 }
+
+void removeState(Domain& domain, m_int state)
+{
+    domain.for_each([state](m_int& cc){if(cc == state) cc = Domain::Void;});
+}
+
+void MS_Statistic::measure(const Domain& domain, m_int statesNumber)
+{
+    this->statesNumber = statesNumber;
+    count(domain);
+}
+
+void MS_Statistic::count(const Domain& domain)
+{
+    grainsCount.resize(statesNumber);
+    m_float size = domain.size();
+    for(m_int idx = 0; idx < size; idx++)
+    {
+        if(domain[idx] == Domain::Void) continue;
+        grainsCount[domain[idx]].first += 1;
+        grainsCount[domain[idx]].second = m_float(grainsCount[domain[idx]].first)/size;
+    }
+}
