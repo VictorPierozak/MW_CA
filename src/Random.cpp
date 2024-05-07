@@ -52,5 +52,5 @@ m_int FortuneWheel::get()
     {
         if(ff < _pairs[idx].second) return _pairs[idx].first;
     }
-    return _pairs[_pairs.size()].first;
+    return _pairs[_pairs.size()-1].first;
 }

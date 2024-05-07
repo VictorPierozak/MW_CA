@@ -23,11 +23,11 @@ int main(int argc, const char** argv)
         Random::vecrand_n rands;
         rands.push_back({std::shared_ptr<Neighbourhood>(new Moore), 0.2});
         rands.push_back({std::shared_ptr<Neighbourhood>(new Neumann), 0.8});
-        gen.setNeighbourhood(std::shared_ptr<Neighbourhood>(new Random(rands)));
+        gen.setNeighbourhood(std::shared_ptr<Neighbourhood>(new Moore));
     }
 
     {
-        std::shared_ptr<BC> bc(new Absorption(dimX, dimY, dimZ));
+        std::shared_ptr<BC> bc(new Periodic(dimX, dimY, dimZ));
         gen.setBC(bc);
     }
 
@@ -40,6 +40,7 @@ int main(int argc, const char** argv)
         gen.setThreadsNumber(12);
     }
 
+    gen.setNucleator(std::shared_ptr<Nucleator>(new UniformNucleator2D(statesNumber)));
     gen.setRandomUniformNucleator(statesNumber);
 
     try
@@ -47,12 +48,20 @@ int main(int argc, const char** argv)
         gen.start();
         Domain& d = gen.domain();
         toBmp(d, gen.stateNumber(), "/home/wiktor/Desktop/MW/MW_CA/res");
+        MS_Statistic ms;
+        ms.measure(d, statesNumber);
+        m_float sum = 0.0;
+        for(auto p : ms.grainsCount)
+        {
+            std::cout<< p.first << ' ' << p.second << std::endl;
+            sum += p.second;
+        }
+        std::cout << sum;
     }
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
     }
-    
 
 
     std::cout<< "Finish\n";

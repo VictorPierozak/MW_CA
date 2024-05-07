@@ -24,7 +24,6 @@ void GenerationManager::start()
    #pragma omp parallel num_threads(_threadsNumber)
     {
         m_int idx = omp_get_thread_num();
-        _generators[idx].reset();
         while(_generators[idx].finish())
         {
             #pragma omp barrier

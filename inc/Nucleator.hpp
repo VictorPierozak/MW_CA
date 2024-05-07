@@ -9,6 +9,7 @@ class Nucleator
     virtual ~Nucleator() = default;
 
     virtual void nucleation(Domain& domain) = 0;
+    m_int statesNumber() const {return _statesNumber;}
 
     protected:
     m_int _statesNumber;
@@ -23,4 +24,11 @@ class RandomUniformNucleator: public Nucleator
 
     private:
     std::minstd_rand _rand;
+};
+
+class UniformNucleator2D: public Nucleator
+{
+    public:
+    UniformNucleator2D(m_int statesNumber): Nucleator(statesNumber) {}
+    void nucleation(Domain& domain) override;
 };

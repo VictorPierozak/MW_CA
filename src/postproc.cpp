@@ -27,7 +27,7 @@ void toBmp(const Domain& domain, m_int stateNumber, std::string dir)
         for(m_int y = 0; y < domain.dimY(); y++)
         for(m_int x = 0; x < domain.dimX(); x++)
         {
-            if(domain(x,y,z) == Domain::Void)
+            if(domain(x,y,z) == Domain::Void || domain(x,y,z) > stateNumber)
             {
                 pixel.Red = 0;
                 pixel.Green = 0;
