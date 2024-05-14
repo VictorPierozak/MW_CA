@@ -18,7 +18,7 @@ class Generator
     Generator(const Subspace& subdomain, const Domain& domain_A, const Domain& domain_B, const std::shared_ptr<Rule> rule, m_int itrLimit);
 
     virtual void iteration() = 0;
-    virtual bool finish() = 0;
+    virtual bool work() = 0;
 
     protected:
 
@@ -30,7 +30,6 @@ class Generator
 
     std::shared_ptr<Rule> _rule;
     Subspace _subspace;
-
 
     m_int _itrLimit;
     m_int _itrCounter;

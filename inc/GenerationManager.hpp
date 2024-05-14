@@ -34,7 +34,7 @@ class GenerationManager
         #pragma omp parallel num_threads(_threadsNumber)
         {
             m_int idx = omp_get_thread_num();
-            while(generators[idx]->finish())
+            while(generators[idx]->work())
             {
                 #pragma omp barrier
                 generators[idx]->iteration();
