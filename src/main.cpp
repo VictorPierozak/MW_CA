@@ -40,7 +40,7 @@ int main(int argc, const char** argv)
         gen.setThreadsNumber(12);
     }
 
-    gen.setNucleator(std::shared_ptr<Nucleator>(new UniformNucleator2D(statesNumber)));
+    gen.setNucleator(std::shared_ptr<Nucleator>(new RandomUniformNucleator(statesNumber)));
     gen.setRandomUniformNucleator(statesNumber);
 
     try

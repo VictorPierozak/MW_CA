@@ -16,7 +16,7 @@ class BC: public virtual Clonable<BC>
 
     enum class BCType{Absorption, Periodic};
 
-    virtual m_int operator()(m_int x, m_int y, m_int z, const Domain&) = 0;
+    virtual m_int operator()(m_int x, m_int y, m_int z) = 0;
 
     protected:
 
@@ -34,7 +34,7 @@ class Periodic: public BC
     Periodic() = delete;
     Periodic(const Periodic&) = default;
     Periodic(m_int dimX, m_int dimY, m_int dimZ): BC(dimX, dimY, dimZ){}
-    m_int operator()(m_int x, m_int y, m_int z, const Domain&) override;
+    m_int operator()(m_int x, m_int y, m_int z) override;
     std::shared_ptr<BC> clone() const override { return std::shared_ptr<BC>(new Periodic(_dimX, _dimY, _dimZ)); }
 };
 
@@ -43,6 +43,6 @@ class Absorption: public BC
     public:
     Absorption(const Absorption&) = default;
     Absorption(m_int dimX, m_int dimY, m_int dimZ): BC(dimX, dimY, dimZ){}
-    m_int operator()(m_int x, m_int y, m_int z, const Domain&) override;
+    m_int operator()(m_int x, m_int y, m_int z) override;
     std::shared_ptr<BC> clone() const override { return std::shared_ptr<BC>(new Absorption(_dimX, _dimY, _dimZ)); }
 };

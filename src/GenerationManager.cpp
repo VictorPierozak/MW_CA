@@ -28,7 +28,6 @@ void GenerationManager::start()
         {
             #pragma omp barrier
             _generators[idx].iteration();
-            _generators[idx].swapBuffers();
             #pragma omp barrier
         }
     }

@@ -26,3 +26,5 @@ class LeastNumerous: public Rule
     m_int state(const std::vector<m_int>&) const override;
     std::shared_ptr<Rule> clone() const override; 
 };
+
+

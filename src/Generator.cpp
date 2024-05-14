@@ -1,28 +1,28 @@
 #include"Generator.hpp"
 
-Generator::Generator(const Subdomain& subdomain, const Domain& domain, const Domain& tmpdomain, const std::shared_ptr<Rule> rule, m_int itrLimit)
+Generator::Generator(const Subdomain& subdomain, const Domain& domain_A, const Domain& domain_B, const std::shared_ptr<Rule> rule, m_int itrLimit)
 {
     _subdomain = subdomain;
-    domain.clone(_domain);
-    tmpdomain.clone(_tmpDomain);
+    domain_A.clone(_domain_A);
+    domain_B.clone(_domain_B);
     _rule = rule->clone();
     _itrLimit = itrLimit;
     _itrCounter = 0;
 
-    _input = &_domain;
-    _output = &_tmpDomain;
+    _input = &_domain_A;
+    _output = &_domain_B;
 }
 
 Generator::Generator(Generator&& gen)
 {
-    gen._domain.clone(_domain);
-    gen._tmpDomain.clone(_tmpDomain);
+    gen._domain_A.clone(_domain_A);
+    gen._domain_B.clone(_domain_B);
     _subdomain = gen._subdomain;
     _rule = gen._rule;
     _itrLimit = gen._itrLimit;
     _itrCounter=0;
-    _input = &_domain;
-    _output = &_tmpDomain;
+    _input = &_domain_A;
+    _output = &_domain_B;
 }
 
 void Generator::iteration()
@@ -40,4 +40,5 @@ void Generator::iteration()
         (*_output)(x,y,z) = _rule->state(nstates);
     }
     _itrCounter++;
+    swapBuffers();
 }

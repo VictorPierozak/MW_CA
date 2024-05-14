@@ -112,6 +112,7 @@ std::vector<m_int> Moore::around(m_int x, m_int y, m_int z, Domain& domain)
     std::vector<m_int> values;
     values.reserve(8);
     coor mov = {0,0,0};
+    m_int idx = -1;
 
     for(m_int y = -1; y <= 1; y++)
     for(m_int x = -1; x <= 1; x++)
@@ -119,8 +120,8 @@ std::vector<m_int> Moore::around(m_int x, m_int y, m_int z, Domain& domain)
         if(x == 0 && y == 0) continue;
         mov = {x,y,0};
         coor moved = cc + mov;
-        if(domain.bc()->operator()(moved.x, moved.y, moved.z, domain) != Domain::Void)
-        values.push_back(domain.bc()->operator()(moved.x, moved.y, moved.z, domain));
+        idx = domain.bc()->operator()(moved.x, moved.y, moved.z);
+        if(idx != -1) values.push_back(domain[idx]);
     }
     return values;
 }
@@ -172,6 +173,7 @@ std::vector<m_int> Neumann::around(m_int x, m_int y, m_int z, Domain& domain)
     std::vector<m_int> values;
     values.reserve(8);
     coor mov = {0,0,0};
+    m_int idx = -1;
 
     for(m_int y = -1; y <= 1; y++)
     for(m_int x = -1; x <= 1; x++)
@@ -180,8 +182,8 @@ std::vector<m_int> Neumann::around(m_int x, m_int y, m_int z, Domain& domain)
         if(x == 0 && y == 0) continue;
         mov = {x,y,0};
         coor moved = cc + mov;
-        if(domain.bc()->operator()(moved.x, moved.y, moved.z, domain) != Domain::Void)
-        values.push_back(domain.bc()->operator()(moved.x, moved.y, moved.z, domain));
+        idx = domain.bc()->operator()(moved.x, moved.y, moved.z);
+        if(idx != -1) values.push_back(domain[idx]);
     }
     return values;
 }
