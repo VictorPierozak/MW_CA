@@ -3,10 +3,10 @@
 #include"Domain.hpp"
 #include"Rules.hpp"
 
-class Generator
+class Generator 
 {
     public:
-    struct Subdomain
+    struct Subspace
     {
         m_int x0, x1;
         m_int y0, y1;
@@ -15,12 +15,12 @@ class Generator
 
     Generator() = delete;
     Generator(Generator&&);
-    Generator(const Subdomain& subdomain, const Domain& domain_A, const Domain& domain_B, const std::shared_ptr<Rule> rule, m_int itrLimit);
+    Generator(const Subspace& subdomain, const Domain& domain_A, const Domain& domain_B, const std::shared_ptr<Rule> rule, m_int itrLimit);
 
-    virtual void iteration();
-    virtual bool finish() const { return _itrCounter != _itrLimit; }
+    virtual void iteration() = 0;
+    virtual bool finish() = 0;
 
-    private:
+    protected:
 
     Domain _domain_A;
     Domain _domain_B;
@@ -29,7 +29,9 @@ class Generator
     Domain* _output;
 
     std::shared_ptr<Rule> _rule;
-    Subdomain _subdomain;
+    Subspace _subspace;
+
+
     m_int _itrLimit;
     m_int _itrCounter;
 

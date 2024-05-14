@@ -28,6 +28,10 @@ $(OBJ_DIR)/Generator.o: $(SRC_DIR)/Generator.cpp
 	$(CXX) $(CXX_FLAGS) $(SRC_DIR)/Generator.cpp -o ../obj/Generator.o
 DEPENDENCIES += $(OBJ_DIR)/Generator.o 
 
+$(OBJ_DIR)/GeneratorCA.o: $(SRC_DIR)/GeneratorCA.cpp
+	$(CXX) $(CXX_FLAGS) $(SRC_DIR)/GeneratorCA.cpp -o ../obj/GeneratorCA.o
+DEPENDENCIES += $(OBJ_DIR)/GeneratorCA.o 
+
 $(OBJ_DIR)/Nucleator.o: $(SRC_DIR)/Nucleator.cpp
 	$(CXX) $(CXX_FLAGS) $(SRC_DIR)/Nucleator.cpp -o ../obj/Nucleator.o
 DEPENDENCIES += $(OBJ_DIR)/Nucleator.o 
@@ -48,9 +52,9 @@ $(OBJ_DIR)/random.o: $(SRC_DIR)/Random.cpp
 	$(CXX) $(CXX_FLAGS) $(SRC_DIR)/Random.cpp -o ../obj/random.o
 DEPENDENCIES += $(OBJ_DIR)/random.o
 
-$(OBJ_DIR)/gui.o: $(SRC_DIR)/gui.cpp
-	$(CXX) $(CXX_FLAGS) $(SRC_DIR)/gui.cpp -o $(OBJ_DIR)/gui.o
-DEPENDENCIES += $(OBJ_DIR)/gui.o
+#$(OBJ_DIR)/gui.o: $(SRC_DIR)/gui.cpp
+#	$(CXX) $(CXX_FLAGS) $(SRC_DIR)/gui.cpp -o $(OBJ_DIR)/gui.o
+#DEPENDENCIES += $(OBJ_DIR)/gui.o
 
 $(OBJ_DIR)/main.o: $(SRC_DIR)/main.cpp
 	$(CXX) $(CXX_FLAGS) $(SRC_DIR)/main.cpp -o ../obj/main.o

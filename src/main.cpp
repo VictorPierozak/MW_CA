@@ -1,5 +1,6 @@
 #include<iostream>
 #include"GenerationManager.hpp"
+#include"GeneratorCA.hpp"
 #include"postproc.hpp"
 
 int main(int argc, const char** argv)
@@ -41,11 +42,10 @@ int main(int argc, const char** argv)
     }
 
     gen.setNucleator(std::shared_ptr<Nucleator>(new RandomUniformNucleator(statesNumber)));
-    gen.setRandomUniformNucleator(statesNumber);
 
     try
     {
-        gen.start();
+        gen.start<GeneratorCA>();
         Domain& d = gen.domain();
         toBmp(d, gen.stateNumber(), "/home/wiktor/Desktop/MW/MW_CA/res");
         MS_Statistic ms;
