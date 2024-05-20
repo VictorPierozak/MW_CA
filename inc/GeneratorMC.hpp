@@ -1,3 +1,4 @@
+#pragma once
 #include<list>
 #include"Generator.hpp"
 
@@ -13,6 +14,8 @@ class GeneratorMC: public Generator
     void iteration() final;
     bool work() final {return _itrCounter != _itrLimit;}
 
+    m_float SHUFFLE_PART = 0.1;
+
     private:
 
     std::list<coor> list_A;
@@ -21,8 +24,8 @@ class GeneratorMC: public Generator
     std::list<coor>* list_current;
     std::list<coor>* list_next;
 
-    std::minstd_rand _rand;
-    std::uniform_real_distribution<m_float> _dist;
+    std::minstd_rand _rand{std::random_device{}()};
+    std::uniform_real_distribution<> _dist;
 
     coor draw();
     bool loop();

@@ -67,6 +67,7 @@
         "__split_buffer": "cpp",
         "iostream": "cpp",
         "codecvt": "cpp",
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "list": "cpp"
     }
 }

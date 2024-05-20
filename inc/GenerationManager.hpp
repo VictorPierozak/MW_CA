@@ -34,6 +34,10 @@ class GenerationManager
         #pragma omp parallel num_threads(_threadsNumber)
         {
             m_int idx = omp_get_thread_num();
+            #pragma omp single
+            {
+                std::cout << idx << '\t';
+            }
             while(generators[idx]->work())
             {
                 #pragma omp barrier
@@ -42,6 +46,9 @@ class GenerationManager
             }
         }
     }
+
+    void startCA();
+    void startMC();
 
     std::shared_ptr<m_int[]> get() {return (std::shared_ptr<m_int[]>) _domain;}
 

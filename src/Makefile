@@ -29,8 +29,12 @@ $(OBJ_DIR)/Generator.o: $(SRC_DIR)/Generator.cpp
 DEPENDENCIES += $(OBJ_DIR)/Generator.o 
 
 $(OBJ_DIR)/GeneratorCA.o: $(SRC_DIR)/GeneratorCA.cpp
-	$(CXX) $(CXX_FLAGS) $(SRC_DIR)/GeneratorCA.cpp -o ../obj/GeneratorCA.o
+	$(CXX) -fopenmp $(CXX_FLAGS) $(SRC_DIR)/GeneratorCA.cpp -o ../obj/GeneratorCA.o
 DEPENDENCIES += $(OBJ_DIR)/GeneratorCA.o 
+
+$(OBJ_DIR)/GeneratorMC.o: $(SRC_DIR)/GeneratorMC.cpp
+	$(CXX) -fopenmp $(CXX_FLAGS) $(SRC_DIR)/GeneratorMC.cpp -o ../obj/GeneratorMC.o
+DEPENDENCIES += $(OBJ_DIR)/GeneratorMC.o 
 
 $(OBJ_DIR)/Nucleator.o: $(SRC_DIR)/Nucleator.cpp
 	$(CXX) $(CXX_FLAGS) $(SRC_DIR)/Nucleator.cpp -o ../obj/Nucleator.o

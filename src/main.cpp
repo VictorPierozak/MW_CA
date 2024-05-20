@@ -1,6 +1,7 @@
 #include<iostream>
 #include"GenerationManager.hpp"
 #include"GeneratorCA.hpp"
+#include"GeneratorMC.hpp"
 #include"postproc.hpp"
 
 int main(int argc, const char** argv)
@@ -22,8 +23,8 @@ int main(int argc, const char** argv)
 
     {
         Random::vecrand_n rands;
-        rands.push_back({std::shared_ptr<Neighbourhood>(new Moore), 0.2});
-        rands.push_back({std::shared_ptr<Neighbourhood>(new Neumann), 0.8});
+        rands.push_back({std::shared_ptr<Neighbourhood>(new Moore), 0.9});
+        rands.push_back({std::shared_ptr<Neighbourhood>(new Neumann), 0.1});
         gen.setNeighbourhood(std::shared_ptr<Neighbourhood>(new Moore));
     }
 
@@ -33,7 +34,8 @@ int main(int argc, const char** argv)
     }
 
     {
-        std::shared_ptr<Rule> rule(new MostNumerous());
+        std::shared_ptr<Rule> rule(new MC(0.5));
+        //std::shared_ptr<Rule> rule(new MostNumerous);
         gen.setRule(rule);
     }
 
@@ -45,7 +47,7 @@ int main(int argc, const char** argv)
 
     try
     {
-        gen.start<GeneratorCA>();
+        gen.startMC();
         Domain& d = gen.domain();
         toBmp(d, gen.stateNumber(), "/home/wiktor/Desktop/MW/MW_CA/res");
         MS_Statistic ms;
@@ -53,7 +55,7 @@ int main(int argc, const char** argv)
         m_float sum = 0.0;
         for(auto p : ms.grainsCount)
         {
-            std::cout<< p.first << ' ' << p.second << std::endl;
+            //std::cout<< p.first << ' ' << p.second << std::endl;
             sum += p.second;
         }
         std::cout << sum;

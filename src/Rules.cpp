@@ -2,7 +2,7 @@
 #include"Domain.hpp"
 #include"Rules.hpp"
 
-m_int MostNumerous::state(const std::vector<m_int>& neighbours) const
+m_int MostNumerous::state(const std::vector<m_int>& neighbours)
 {
     m_int ssx;
     auto identity = [&ssx](const std::pair<m_int, m_int>& tt){ return tt.first == ssx;};
@@ -25,7 +25,7 @@ std::shared_ptr<Rule> MostNumerous::clone() const
     return std::shared_ptr<Rule>(new MostNumerous(*this));
 }
 
-m_int LeastNumerous::state(const std::vector<m_int>& neighbours) const
+m_int LeastNumerous::state(const std::vector<m_int>& neighbours) 
 {
     m_int ssx;
     auto identity = [&ssx](const std::pair<m_int, m_int>& tt){ return tt.first == ssx;};
@@ -46,4 +46,29 @@ m_int LeastNumerous::state(const std::vector<m_int>& neighbours) const
 std::shared_ptr<Rule> LeastNumerous::clone() const
 {
     return std::shared_ptr<Rule>(new LeastNumerous(*this));
+}
+
+
+m_int MC::state(const std::vector<m_int>& neighbours) 
+{
+    m_int ssx;
+    m_int dE = 0;
+    m_int idx = _dist(_genRand)*neighbours.size();
+    m_int s1 = neighbours[idx];
+    if(s1 == Domain::Void) return _s0;
+    for(m_int n: neighbours)
+    {
+        if(n == Domain::Void) continue;
+        dE += (n == _s0) - (n == s1);
+    }
+  
+    if(dE <= 0) return s1;
+
+    m_float p = exp((-dE)/(_coeff_kt));
+    return ( (_dist(_genRand) <= p) ? s1 : _s0 );
+}
+
+std::shared_ptr<Rule> MC::clone() const
+{
+    return std::shared_ptr<Rule>(new MC(*this));
 }
