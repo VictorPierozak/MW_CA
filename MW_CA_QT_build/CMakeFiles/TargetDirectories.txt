@@ -1,0 +1,8 @@
+/home/wiktor/Desktop/MW/MW_CA/MW_CA_QT_build/CMakeFiles/MW_CA_QT.dir
+/home/wiktor/Desktop/MW/MW_CA/MW_CA_QT_build/CMakeFiles/edit_cache.dir
+/home/wiktor/Desktop/MW/MW_CA/MW_CA_QT_build/CMakeFiles/rebuild_cache.dir
+/home/wiktor/Desktop/MW/MW_CA/MW_CA_QT_build/CMakeFiles/list_install_components.dir
+/home/wiktor/Desktop/MW/MW_CA/MW_CA_QT_build/CMakeFiles/install.dir
+/home/wiktor/Desktop/MW/MW_CA/MW_CA_QT_build/CMakeFiles/install/local.dir
+/home/wiktor/Desktop/MW/MW_CA/MW_CA_QT_build/CMakeFiles/install/strip.dir
+/home/wiktor/Desktop/MW/MW_CA/MW_CA_QT_build/CMakeFiles/MW_CA_QT_autogen.dir

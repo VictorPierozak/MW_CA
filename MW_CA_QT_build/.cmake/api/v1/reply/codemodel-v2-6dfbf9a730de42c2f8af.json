@@ -1,0 +1,70 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-RelWithDebInfo-5fc31f2d56628956a0c3.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"name" : "RelWithDebInfo",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "MW_CA_QT",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "MW_CA_QT::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-MW_CA_QT-RelWithDebInfo-ff372ec8cb0d9bf461ba.json",
+					"name" : "MW_CA_QT",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "MW_CA_QT_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-MW_CA_QT_autogen-RelWithDebInfo-3f550d7b8c80e2c568c6.json",
+					"name" : "MW_CA_QT_autogen",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/wiktor/Desktop/MW/MW_CA/MW_CA_QT_build",
+		"source" : "/home/wiktor/Desktop/MW/MW_CA/MW_CA_QT"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

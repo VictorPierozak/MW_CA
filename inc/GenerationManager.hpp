@@ -10,12 +10,16 @@ class GenerationManager
     GenerationManager() = delete;
     GenerationManager(m_int dimX, m_int dimY, m_int dimZ, m_int itrLimit);
 
-    void setNucleator(std::shared_ptr<Nucleator> ptr) { _nucleator = ptr; _statesNumber = ptr->statesNumber(); }
+    void setNucleator(std::shared_ptr<Nucleator> ptr) { 
+        _nucleator = ptr; 
+        _statesNumber = ptr->statesNumber();  
+        _nucleator->nucleation(_domain);
+    }
     void setNeighbourhood(std::shared_ptr<Neighbourhood> n);
     void setBC(std::shared_ptr<BC> bc);
     void setRule(std::shared_ptr<Rule> rule);
     void setThreadsNumber(m_int n) {_threadsNumber = n;}
-
+    /*
     template<typename GeneratorType>
     void start()
     {
@@ -46,7 +50,7 @@ class GenerationManager
             }
         }
     }
-
+*/
     void startCA();
     void startMC();
 

@@ -1,5 +1,5 @@
 #include"postproc.hpp"
-
+#include<fstream>
 std::vector<color> colors(m_int stateNumber)
 {
     std::vector<color> res;
@@ -15,9 +15,9 @@ std::vector<color> colors(m_int stateNumber)
     return res;
 }
 
-void toBmp(const Domain& domain, m_int stateNumber, std::string dir)
+void toBmp(const Domain& domain, m_int stateNumber, std::string dir, std::vector<color>& stateColors)
 {
-    std::vector<color> stateColors = colors(stateNumber);
+    if(stateNumber != stateColors.size()) stateColors = colors(stateNumber);
     for(m_int z  = 0; z < domain.dimZ(); z++)
     {
         BMP img;
@@ -68,4 +68,17 @@ void MS_Statistic::count(const Domain& domain)
         grainsCount[domain[idx]].first += 1;
         grainsCount[domain[idx]].second = m_float(grainsCount[domain[idx]].first)/size;
     }
+}
+
+void toTxt(const Domain& domain, std::string dir)
+{
+    std::ofstream file;
+    file.open(dir+"mc.txt");
+    for(m_int y = 0; y < domain.dimY(); y++)
+    for(m_int z = 0; z < domain.dimZ(); z++)
+    for(m_int x = 0; x < domain.dimX(); x++)
+    {
+        file << x << ' ' << y <<  ' ' << z << ' ' << domain(x,y,z) << std::endl;
+    }
+    file.close();
 }

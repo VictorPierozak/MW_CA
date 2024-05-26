@@ -25,7 +25,6 @@ void GenerationManager::setRule(std::shared_ptr<Rule> rule)
 
 void GenerationManager::startCA()
     {
-        _nucleator->nucleation(_domain);
         _domain.copy(_tmpdomain);
         m_int dy = (_domain.dimY() + _threadsNumber - 1)/_threadsNumber;
         m_int y0 = 0;
@@ -52,7 +51,6 @@ void GenerationManager::startCA()
 
 void GenerationManager::startMC()
 {
-    _nucleator->nucleation(_domain);
     _domain.copy(_tmpdomain);
     m_int dy = (_domain.dimY() + _threadsNumber - 1)/_threadsNumber;
     m_int y0 = 0;
@@ -76,5 +74,3 @@ void GenerationManager::startMC()
     }
 }
 
-template void GenerationManager::start<GeneratorCA> ();
-template void GenerationManager::start<GeneratorMC>();

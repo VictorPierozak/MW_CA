@@ -68,6 +68,11 @@
         "iostream": "cpp",
         "codecvt": "cpp",
         "fstream": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "hash_map": "cpp",
+        "map": "cpp",
+        "set": "cpp",
+        "shared_mutex": "cpp",
+        "cfenv": "cpp"
     }
 }

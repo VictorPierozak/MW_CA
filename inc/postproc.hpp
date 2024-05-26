@@ -24,5 +24,6 @@ struct MS_Statistic
 };
 
 
-void toBmp(const Domain& domain, m_int stateNumber, std::string dir);
+void toBmp(const Domain& domain, m_int stateNumber, std::string dir, std::vector<color>& stateColors);
+void toTxt(const Domain& domain, std::string dir);
 void removeState(Domain& domain, m_int state);

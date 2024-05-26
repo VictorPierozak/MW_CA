@@ -49,7 +49,7 @@ int main(int argc, const char** argv)
     {
         gen.startMC();
         Domain& d = gen.domain();
-        toBmp(d, gen.stateNumber(), "/home/wiktor/Desktop/MW/MW_CA/res");
+        //toBmp(d, gen.stateNumber(), "/home/wiktor/Desktop/MW/MW_CA/res");
         MS_Statistic ms;
         ms.measure(d, statesNumber);
         m_float sum = 0.0;
