@@ -12,7 +12,7 @@ Domain::~Domain()
 }
 
 #ifdef INT_64
-const m_int Domain::Void = __INT64_MAX__;
+const m_int Domain::Void = __INT32_MAX__;
 #endif
 
 #ifdef INT_32

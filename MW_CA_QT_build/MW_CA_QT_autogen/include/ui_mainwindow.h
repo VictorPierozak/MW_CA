@@ -13,9 +13,11 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
+#include <QtWidgets/QFrame>
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QLCDNumber>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
@@ -58,6 +60,11 @@ public:
     QPushButton *increaseZ;
     QLCDNumber *z_layer;
     QPushButton *export_2;
+    QLineEdit *generation_time_text;
+    QLineEdit *domain_size_text;
+    QLabel *label_10;
+    QLabel *label_11;
+    QFrame *chart_frame;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -65,7 +72,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(800, 600);
+        MainWindow->resize(1038, 600);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         dimX = new QTextEdit(centralwidget);
@@ -164,10 +171,27 @@ public:
         export_2 = new QPushButton(centralwidget);
         export_2->setObjectName(QString::fromUtf8("export_2"));
         export_2->setGeometry(QRect(370, 510, 401, 25));
+        generation_time_text = new QLineEdit(centralwidget);
+        generation_time_text->setObjectName(QString::fromUtf8("generation_time_text"));
+        generation_time_text->setGeometry(QRect(790, 30, 241, 25));
+        domain_size_text = new QLineEdit(centralwidget);
+        domain_size_text->setObjectName(QString::fromUtf8("domain_size_text"));
+        domain_size_text->setGeometry(QRect(790, 90, 241, 25));
+        label_10 = new QLabel(centralwidget);
+        label_10->setObjectName(QString::fromUtf8("label_10"));
+        label_10->setGeometry(QRect(790, 10, 171, 17));
+        label_11 = new QLabel(centralwidget);
+        label_11->setObjectName(QString::fromUtf8("label_11"));
+        label_11->setGeometry(QRect(790, 70, 211, 17));
+        chart_frame = new QFrame(centralwidget);
+        chart_frame->setObjectName(QString::fromUtf8("chart_frame"));
+        chart_frame->setGeometry(QRect(800, 130, 221, 401));
+        chart_frame->setFrameShape(QFrame::StyledPanel);
+        chart_frame->setFrameShadow(QFrame::Raised);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 800, 22));
+        menubar->setGeometry(QRect(0, 0, 1038, 22));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -213,6 +237,8 @@ public:
         decreaseZ->setText(QCoreApplication::translate("MainWindow", "<", nullptr));
         increaseZ->setText(QCoreApplication::translate("MainWindow", ">", nullptr));
         export_2->setText(QCoreApplication::translate("MainWindow", "Export to txt", nullptr));
+        label_10->setText(QCoreApplication::translate("MainWindow", "Generation time [ms]", nullptr));
+        label_11->setText(QCoreApplication::translate("MainWindow", "Domain size [KB]", nullptr));
     } // retranslateUi
 
 };

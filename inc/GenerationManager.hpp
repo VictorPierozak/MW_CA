@@ -10,7 +10,7 @@ class GenerationManager
     GenerationManager() = delete;
     GenerationManager(m_int dimX, m_int dimY, m_int dimZ, m_int itrLimit);
 
-    void setNucleator(std::shared_ptr<Nucleator> ptr) { 
+    void nucleate(std::shared_ptr<Nucleator> ptr) { 
         _nucleator = ptr; 
         _statesNumber = ptr->statesNumber();  
         _nucleator->nucleation(_domain);
@@ -19,11 +19,11 @@ class GenerationManager
     void setBC(std::shared_ptr<BC> bc);
     void setRule(std::shared_ptr<Rule> rule);
     void setThreadsNumber(m_int n) {_threadsNumber = n;}
-    /*
+
     template<typename GeneratorType>
     void start()
     {
-        _nucleator->nucleation(_domain);
+        //_nucleator->nucleation(_domain);
         _domain.copy(_tmpdomain);
         m_int dy = (_domain.dimY() + _threadsNumber - 1)/_threadsNumber;
         m_int y0 = 0;
@@ -35,31 +35,16 @@ class GenerationManager
             y0 += dy;
         }
 
-        #pragma omp parallel num_threads(_threadsNumber)
-        {
-            m_int idx = omp_get_thread_num();
-            #pragma omp single
-            {
-                std::cout << idx << '\t';
-            }
-            while(generators[idx]->work())
-            {
-                #pragma omp barrier
-                generators[idx]->iteration();
-                #pragma omp barrier
-            }
-        }
-    }
-*/
-    void startCA();
-    void startMC();
+        execute(generators);
 
-    std::shared_ptr<m_int[]> get() {return (std::shared_ptr<m_int[]>) _domain;}
+    }
 
     Domain& domain() { return _domain; }
     m_int stateNumber() const { return _statesNumber; }
 
     private:
+
+    void execute(std::vector<std::shared_ptr<Generator>> &generators);
 
     Domain _domain;
     Domain _tmpdomain;

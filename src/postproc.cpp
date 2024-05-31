@@ -74,6 +74,7 @@ void toTxt(const Domain& domain, std::string dir)
 {
     std::ofstream file;
     file.open(dir+"mc.txt");
+    file << domain.size() << std::endl << std::endl;
     for(m_int y = 0; y < domain.dimY(); y++)
     for(m_int z = 0; z < domain.dimZ(); z++)
     for(m_int x = 0; x < domain.dimX(); x++)

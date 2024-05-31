@@ -43,13 +43,15 @@ int main(int argc, const char** argv)
         gen.setThreadsNumber(12);
     }
 
-    gen.setNucleator(std::shared_ptr<Nucleator>(new RandomUniformNucleator(statesNumber)));
+    gen.nucleate(std::shared_ptr<Nucleator>(new RandomUniformNucleator(statesNumber)));
 
     try
     {
-        gen.startMC();
+        //gen.startMC();
+        gen.start<GeneratorMC>();
         Domain& d = gen.domain();
-        //toBmp(d, gen.stateNumber(), "/home/wiktor/Desktop/MW/MW_CA/res");
+        std::vector<color> n;
+        toBmp(d, gen.stateNumber(), "/home/wiktor/Desktop/MW/MW_CA/res/", n);
         MS_Statistic ms;
         ms.measure(d, statesNumber);
         m_float sum = 0.0;

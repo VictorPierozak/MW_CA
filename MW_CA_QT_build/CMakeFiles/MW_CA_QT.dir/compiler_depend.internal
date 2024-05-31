@@ -851,9 +851,11 @@ CMakeFiles/MW_CA_QT.dir/mainwindow.cpp.o
  /home/wiktor/Desktop/MW/MW_CA/inc/GenerationManager.hpp
  /home/wiktor/Desktop/MW/MW_CA/inc/Generator.hpp
  /home/wiktor/Desktop/MW/MW_CA/inc/GeneratorCA.hpp
+ /home/wiktor/Desktop/MW/MW_CA/inc/GeneratorMC.hpp
  /home/wiktor/Desktop/MW/MW_CA/inc/Nucleator.hpp
  /home/wiktor/Desktop/MW/MW_CA/inc/Random.hpp
  /home/wiktor/Desktop/MW/MW_CA/inc/Rules.hpp
+ /home/wiktor/Desktop/MW/MW_CA/inc/Timer.hpp
  /home/wiktor/Desktop/MW/MW_CA/inc/basic_types.h
  /home/wiktor/Desktop/MW/MW_CA/inc/postproc.hpp
  /home/wiktor/Desktop/MW/MW_CA/MW_CA_QT/mainwindow.h
@@ -1256,11 +1258,13 @@ CMakeFiles/MW_CA_QT.dir/mainwindow.cpp.o
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QApplication
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QCheckBox
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QComboBox
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QFrame
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QGraphicsPixmapItem
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QGraphicsScene
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QGraphicsView
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QLCDNumber
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QLabel
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QLineEdit
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QMainWindow
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QMenuBar
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QPushButton
@@ -1283,6 +1287,7 @@ CMakeFiles/MW_CA_QT.dir/mainwindow.cpp.o
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qgraphicsview.h
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qlabel.h
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qlcdnumber.h
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qlineedit.h
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qmainwindow.h
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qmenu.h
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qmenubar.h

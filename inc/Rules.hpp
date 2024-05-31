@@ -34,7 +34,7 @@ class LeastNumerous: public Rule
 class MC: public Rule
 {
     public:
-    MC(m_float k = -1.0): _coeff_kt(k), _dist(0.0,1.0), _genRand(std::random_device{}()) {}
+    MC(m_float k = 0.1): _coeff_kt(k), _dist(0.0,1.0), _genRand(std::random_device{}()) {}
     m_int state(const std::vector<m_int>&) override;
     std::shared_ptr<Rule> clone() const override; 
 

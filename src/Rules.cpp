@@ -51,21 +51,35 @@ std::shared_ptr<Rule> LeastNumerous::clone() const
 
 m_int MC::state(const std::vector<m_int>& neighbours) 
 {
-    m_int ssx;
-    m_int dE = 0;
-    m_int idx = _dist(_genRand)*neighbours.size();
-    m_int s1 = neighbours[idx];
-    if(s1 == Domain::Void) return _s0;
-    for(m_int n: neighbours)
-    {
-        if(n == Domain::Void) continue;
-        dE += (n == _s0) - (n == s1);
-    }
+    int limit = 9;
+    //while(true){
+        m_int ssx;
+        m_int dE = 0;
+        m_int idx = _dist(_genRand)*neighbours.size();
+        m_int s1 = neighbours[idx];
+        if(s1 == Domain::Void) 
+        {
+            return _s0;
+        }
+        for(m_int n: neighbours)
+        {
+            if(n == Domain::Void) continue;
+            dE += (n == _s0) - (n == s1);
+        }
   
-    if(dE <= 0) return s1;
-
-    m_float p = exp((-dE)/(_coeff_kt));
-    return ( (_dist(_genRand) <= p) ? s1 : _s0 );
+        if(dE <= 0)
+        {
+            _s0 = s1;
+        }
+        else
+        {
+            m_float p = exp((-dE)/(_coeff_kt));
+            if(_dist(_genRand) <= p) 
+            {
+                _s0 = s1;
+            }
+        }
+    return _s0;
 }
 
 std::shared_ptr<Rule> MC::clone() const

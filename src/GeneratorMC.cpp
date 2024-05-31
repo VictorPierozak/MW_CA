@@ -1,7 +1,7 @@
 #include"GeneratorMC.hpp"
 
 GeneratorMC::GeneratorMC(const Subspace& subdomain, const Domain& domain_A, const Domain& domain_B, const std::shared_ptr<Rule> rule, m_int itrLimit):
-Generator(subdomain, domain_A, domain_B, rule, itrLimit)
+Generator(subdomain, domain_A, domain_A, rule, itrLimit)
 {
 
     for(m_int y = _subspace.y0; y < _subspace.y1; y++)
@@ -24,7 +24,7 @@ void GeneratorMC::iteration()
         (*_output)(pos.x,pos.y,pos.z) = _rule->state(nstates);
     }
     std::swap(list_current, list_next);
-    swapBuffers();
+    //swapBuffers();
     _itrCounter++;
 }
 

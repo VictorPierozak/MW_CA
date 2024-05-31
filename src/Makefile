@@ -60,6 +60,10 @@ DEPENDENCIES += $(OBJ_DIR)/random.o
 #	$(CXX) $(CXX_FLAGS) $(SRC_DIR)/gui.cpp -o $(OBJ_DIR)/gui.o
 #DEPENDENCIES += $(OBJ_DIR)/gui.o
 
+$(OBJ_DIR)/timer.o: $(SRC_DIR)/Timer.cpp
+	$(CXX) $(CXX_FLAGS) $(SRC_DIR)/Timer.cpp -o $(OBJ_DIR)/timer.o
+DEPENDENCIES += $(OBJ_DIR)/timer.o
+
 $(OBJ_DIR)/main.o: $(SRC_DIR)/main.cpp
 	$(CXX) $(CXX_FLAGS) $(SRC_DIR)/main.cpp -o ../obj/main.o
 

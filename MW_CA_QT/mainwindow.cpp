@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include"../inc/postproc.hpp"
 #include "./ui_mainwindow.h"
+#include"../inc/Timer.hpp"
+#include"../inc/GeneratorMC.hpp"
 
 #include<thread>
 
@@ -10,17 +12,21 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->result->setScene(&m_scene);
-
+    this->setWindowTitle("Generator");
     ui->current->setEnabled(false);
     ui->remove_grain->setEnabled(false);
     ui->reverse_grain->setEnabled(true);
-
+    //ui->generation_time_text->setEnabled(false);
+    ui->generation_time_text->setReadOnly(true);
+    //ui->domain_size_text->setEnabled(true);
+    ui->domain_size_text->setReadOnly(true);
     connect(ui->start, &QPushButton::clicked, this, &MainWindow::OnStartClick);
     connect(ui->current, &QCheckBox::stateChanged, this, &MainWindow::OnCurrentChecked);
     connect(ui->remove_grain, &QPushButton::clicked, this, &MainWindow::OnRemoveGrainClick);
     connect(ui->reverse_grain, &QPushButton::clicked, this, &MainWindow::OnReverseClick);
     connect(ui->decreaseZ, &QPushButton::clicked, this, &MainWindow::OnDecreaseZClick);
     connect(ui->increaseZ, &QPushButton::clicked, this, &MainWindow::OnIncreaseZClick);
+    connect(ui->export_2, &QPushButton::clicked, this, &MainWindow::OnExportClick);
 }
 
 void MainWindow::OnStartClick()
@@ -40,11 +46,11 @@ void MainWindow::OnStartClick()
         m_manager = std::make_shared<GenerationManager>(dimX, dimY, dimZ, iterations);
         if(nucleation_type == Nucleation_Random)
         {
-            m_manager->setNucleator(std::shared_ptr<Nucleator>(new RandomUniformNucleator(grainsnumber)));
+            m_manager->nucleate(std::shared_ptr<Nucleator>(new RandomUniformNucleator(grainsnumber)));
         }
         else if(nucleation_type == Nucleation_Uniform)
         {
-            m_manager->setNucleator(std::shared_ptr<Nucleator>(new UniformNucleator2D(grainsnumber)));
+            m_manager->nucleate(std::shared_ptr<Nucleator>(new UniformNucleator2D(grainsnumber)));
         }
     }
 
@@ -56,6 +62,13 @@ void MainWindow::OnStartClick()
     else if(neighbourhood_type == N_Neumann)
     {
         m_manager->setNeighbourhood(std::shared_ptr<Neighbourhood>(new Neumann));
+    }
+    else if(neighbourhood_type == N_Random)
+    {
+        Random::vecrand_n rands;
+        rands.push_back({std::shared_ptr<Neighbourhood>(new Moore), 0.5});
+        rands.push_back({std::shared_ptr<Neighbourhood>(new Neumann), 0.5});
+        m_manager->setNeighbourhood(std::shared_ptr<Neighbourhood>(new Random(rands)));
     }
 
     if(bc == L_Periodic)
@@ -76,12 +89,16 @@ void MainWindow::OnStartClick()
     if(generator_type == L_CA)
     {
         m_manager->setRule(std::shared_ptr<Rule>(new MostNumerous));
-        m_manager->startCA();
+        Timer::start();
+        m_manager->start<GeneratorCA>();
+        Timer::stop();
     }
     else if(generator_type == L_MC)
     {
         m_manager->setRule(std::shared_ptr<Rule>(new MC));
-        m_manager->startMC();
+        Timer::start();
+        m_manager->start<GeneratorMC>();
+        Timer::stop();
     }
 
     ui->current->setEnabled(true);
@@ -95,6 +112,8 @@ void MainWindow::updateResults()
 {
     toBmp(m_manager->domain(), m_manager->stateNumber(), L_Res_Path.toStdString(), m_colors);
     m_z = 0;
+    ui->generation_time_text->setText(QString::number(Timer::getMilliseconds()));
+    ui->domain_size_text->setText(QString::number(m_manager->domain().size() * sizeof(m_manager->domain()(0,0,0))/1000));
 }
 
 void MainWindow::OnCurrentChecked(int n)
